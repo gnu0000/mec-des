@@ -1,0 +1,29 @@
+DEBUG = FALSE
+
+!IF "$(DEBUG)" == "TRUE"
+COPT = /c /W3 /AL /Od /Zip /nologo
+LOPT = /CO/NOLOGO/NOE/St:18000
+LIBS = Gnu16d
+EXCP = rem
+!ELSE
+COPT = /c /W3 /AL /Ox /Grs /Zp /nologo
+LOPT = /E/F/PACKC/NOLOGO/NOE/St:18000
+LIBS = Gnu16o
+EXCP = pklite -p
+!ENDIF
+
+all : des.exe rc4.exe
+
+des.obj : des.c
+  cl $(COPT) $*.c
+
+rc4.obj : rc4.c
+  cl $(COPT) $*.c
+
+des.exe : des.obj
+  link $* $(LOPT),,NUL,$(LIBS);
+  $(EXCP) $(@B).EXE
+
+rc4.exe : rc4.obj
+  link $* $(LOPT),,NUL,$(LIBS);
+  $(EXCP) $(@B).EXE
